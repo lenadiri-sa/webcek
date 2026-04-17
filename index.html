@@ -68,6 +68,8 @@
   .stat-val.pro { color: #c4b5fd; }
   .stat-val.live { color: #56d364; }
   .stat-val.notfound { color: #f85149; }
+  .user-bio { display: flex; align-items: flex-start; gap: 5px; font-size: 11px; color: #58a6ff; margin-top: 5px; line-height: 1.45; }
+  .user-bio span { color: #c9d1d9; font-style: italic; }
 </style>
 </head>
 <body>
@@ -279,12 +281,59 @@ function renderItem(group, data) {
             ${data.public_repos}
           </span>` : ''}
         </div>
+        ${data.bio ? `<div class="user-bio">
+          <svg viewBox="0 0 16 16" fill="currentColor" style="width:11px;height:11px;flex-shrink:0;margin-top:2px;"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>
+          <span>${data.bio.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>
+        </div>` : ''}
       </div>`;
   }
 
   list.appendChild(item);
   // Scroll to bottom
   list.scrollTop = list.scrollHeight;
+}
+
+// ─── Pro Detection via HTML scrape ──────────────────────────────────────────
+
+async function checkProFromHTML(username) {
+  // Scrape github.com/username profile page via CORS proxy
+  // Look for: class="Label Label--purple text-uppercase" with title="Label: Pro"
+  // This appears inside the Highlights section on the sidebar
+  const targetUrl = 'https://github.com/' + username;
+  const proxies = [
+    'https://api.allorigins.win/get?url=' + encodeURIComponent(targetUrl),
+    'https://corsproxy.io/?' + encodeURIComponent(targetUrl),
+  ];
+
+  for (const proxyUrl of proxies) {
+    try {
+      const r = await fetch(proxyUrl, { signal: AbortSignal.timeout(7000) });
+      if (!r.ok) continue;
+
+      let html = '';
+      if (proxyUrl.includes('allorigins')) {
+        const json = await r.json();
+        html = json.contents || '';
+      } else {
+        html = await r.text();
+      }
+
+      // Check for the exact Pro label structure:
+      // title="Label: Pro" ... class="Label Label--purple text-uppercase"
+      // We check both attributes in either order, and also the text content "Pro"
+      const hasProTitle = html.includes('title="Label: Pro"');
+      const hasProClass = html.includes('Label--purple');
+      const hasProText  = /Label--purple[^>]*>\s*Pro\s*</.test(html);
+
+      if ((hasProTitle && hasProClass) || hasProText) {
+        return true;
+      }
+      return false; // Got a valid response, not pro
+    } catch (e) {
+      continue; // Try next proxy
+    }
+  }
+  return false; // All proxies failed, assume not pro
 }
 
 // ─── API Call ────────────────────────────────────────────────────────────────
@@ -296,21 +345,20 @@ async function checkUser(username, token) {
     const r = await fetch(`https://api.github.com/users/${username}`, { headers });
     if (r.status === 404) return { status: 'notfound', login: username };
     if (r.status === 403) {
-      // Rate limited
       return { status: 'error', login: username, code: 403, msg: 'Rate limited' };
     }
     if (!r.ok) return { status: 'error', login: username, code: r.status };
     const data = await r.json();
 
-    // PRO detection: GitHub API exposes plan only for authenticated own user,
-    // so for public checks we use heuristics:
-    // 1. data.plan exists (rare, needs auth)
-    // 2. data.type === 'Organization' → skip
-    // We'll mark as 'pro' only if plan is confirmed, otherwise 'live'
+    // PRO detection via HTML scrape of github.com/username
+    // Checks for Label--purple "Pro" badge in Highlights section
     let isPro = false;
     if (data.plan && data.plan.name && data.plan.name.toLowerCase() !== 'free') {
-      isPro = true;
+      isPro = true; // Authenticated API plan info (rare)
+    } else {
+      isPro = await checkProFromHTML(username);
     }
+
     return { status: isPro ? 'pro' : 'live', ...data };
   } catch (e) {
     return { status: 'error', login: username };
