@@ -29,15 +29,18 @@
   --red: #f87171;
   --red-bg: rgba(248,113,113,0.08);
   --red-border: rgba(248,113,113,0.2);
+  --orange: #fb923c;
+  --orange-bg: rgba(251,146,60,0.08);
+  --orange-border: rgba(251,146,60,0.2);
+  --cyan: #22d3ee;
+  --cyan-bg: rgba(34,211,238,0.08);
+  --cyan-border: rgba(34,211,238,0.2);
   --gold: #fbbf24;
   --font: 'Space Grotesk', sans-serif;
   --mono: 'JetBrains Mono', monospace;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
   font-family: var(--font);
   background: var(--bg);
@@ -45,8 +48,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-
-/* BACKGROUND EFFECTS */
 body::before {
   content: '';
   position: fixed;
@@ -57,8 +58,6 @@ body::before {
   pointer-events: none;
   z-index: 0;
 }
-
-/* GRID DOTS */
 body::after {
   content: '';
   position: fixed;
@@ -68,16 +67,13 @@ body::after {
   pointer-events: none;
   z-index: 0;
 }
-
 .container {
   position: relative;
   z-index: 1;
-  max-width: 1280px;
+  max-width: 1380px;
   margin: 0 auto;
   padding: 0 24px 48px;
 }
-
-/* TOP NAV BAR */
 .navbar {
   display: flex;
   align-items: center;
@@ -86,26 +82,9 @@ body::after {
   border-bottom: 1px solid var(--border);
   margin-bottom: 28px;
 }
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-logo svg {
-  width: 22px;
-  height: 22px;
-  fill: var(--text);
-}
-
-.nav-title {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-  color: var(--text);
-}
-
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo svg { width: 22px; height: 22px; fill: var(--text); }
+.nav-title { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; color: var(--text); }
 .pro-chip {
   display: inline-flex;
   align-items: center;
@@ -120,12 +99,7 @@ body::after {
   border-radius: 20px;
   text-transform: uppercase;
 }
-
-.pro-chip::before {
-  content: '⚡';
-  font-size: 9px;
-}
-
+.pro-chip::before { content: '⚡'; font-size: 9px; }
 .nav-status {
   font-family: var(--mono);
   font-size: 11px;
@@ -134,7 +108,6 @@ body::after {
   align-items: center;
   gap: 8px;
 }
-
 .status-dot {
   width: 6px;
   height: 6px;
@@ -143,14 +116,48 @@ body::after {
   box-shadow: 0 0 8px rgba(34,197,94,0.6);
   animation: pulse 2s ease-in-out infinite;
 }
-
 .status-dot.idle { background: var(--muted); box-shadow: none; animation: none; }
 .status-dot.running { animation: pulse 0.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 5px;
 }
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--muted2);
+  border: none;
+  background: transparent;
+  transition: all 0.2s;
+  letter-spacing: -0.2px;
+}
+.tab.active {
+  background: var(--bg3);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+.tab:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+.tab-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.tab-dot.blue { background: var(--accent); }
+.tab-dot.orange { background: var(--orange); }
 
 /* STATS BAR */
 .stats-bar {
@@ -159,7 +166,6 @@ body::after {
   gap: 12px;
   margin-bottom: 24px;
 }
-
 .stat-card {
   background: var(--bg1);
   border: 1px solid var(--border);
@@ -167,9 +173,7 @@ body::after {
   padding: 16px 20px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.2s;
 }
-
 .stat-card::after {
   content: '';
   position: absolute;
@@ -177,12 +181,10 @@ body::after {
   height: 2px;
   border-radius: 14px 14px 0 0;
 }
-
 .stat-card.pro-card::after { background: linear-gradient(90deg, var(--purple), transparent); }
 .stat-card.live-card::after { background: linear-gradient(90deg, var(--green), transparent); }
 .stat-card.nf-card::after { background: linear-gradient(90deg, var(--red), transparent); }
 .stat-card.spd-card::after { background: linear-gradient(90deg, var(--accent), transparent); }
-
 .stat-label {
   font-size: 10px;
   font-weight: 600;
@@ -190,11 +192,7 @@ body::after {
   text-transform: uppercase;
   color: var(--muted2);
   margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
-
 .stat-val {
   font-family: var(--mono);
   font-size: 28px;
@@ -202,7 +200,6 @@ body::after {
   letter-spacing: -1px;
   line-height: 1;
 }
-
 .sv-pro { color: var(--purple); }
 .sv-live { color: var(--green); }
 .sv-nf { color: var(--red); }
@@ -215,7 +212,6 @@ body::after {
   gap: 16px;
   align-items: start;
 }
-
 @media (max-width: 900px) {
   .main-grid { grid-template-columns: 1fr; }
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
@@ -228,7 +224,6 @@ body::after {
   border-radius: 16px;
   padding: 20px;
 }
-
 .panel-header {
   display: flex;
   align-items: center;
@@ -237,33 +232,17 @@ body::after {
   padding-bottom: 14px;
   border-bottom: 1px solid var(--border);
 }
-
 .panel-icon {
-  width: 28px;
-  height: 28px;
+  width: 28px; height: 28px;
   border-radius: 8px;
   background: var(--bg2);
   border: 1px solid var(--border2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   color: var(--muted2);
 }
+.panel-title { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+.panel-hint { font-size: 10px; color: var(--muted); font-family: var(--mono); }
 
-.panel-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  flex: 1;
-}
-
-.panel-hint {
-  font-size: 10px;
-  color: var(--muted);
-  font-family: var(--mono);
-}
-
-/* TEXTAREA */
 textarea {
   width: 100%;
   background: var(--bg);
@@ -279,11 +258,9 @@ textarea {
   outline: none;
   transition: border-color 0.2s;
 }
-
 textarea::placeholder { color: var(--muted); }
 textarea:focus { border-color: rgba(79,142,247,0.4); }
 
-/* FIELD LABEL */
 .field-label {
   font-size: 10px;
   font-weight: 600;
@@ -295,8 +272,6 @@ textarea:focus { border-color: rgba(79,142,247,0.4); }
   align-items: center;
   gap: 5px;
 }
-
-/* TOKEN INPUT */
 .token-input {
   width: 100%;
   background: var(--bg);
@@ -309,18 +284,15 @@ textarea:focus { border-color: rgba(79,142,247,0.4); }
   outline: none;
   transition: border-color 0.2s, color 0.2s;
 }
-
 .token-input::placeholder { color: var(--muted); }
 .token-input:focus { border-color: rgba(79,142,247,0.4); color: var(--text); }
 
-/* OPTIONS ROW */
 .opts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   margin-top: 10px;
 }
-
 .opt-block label {
   display: block;
   font-size: 10px;
@@ -330,7 +302,6 @@ textarea:focus { border-color: rgba(79,142,247,0.4); }
   color: var(--muted2);
   margin-bottom: 5px;
 }
-
 select {
   width: 100%;
   background: var(--bg);
@@ -349,16 +320,13 @@ select {
   padding-right: 28px;
   transition: border-color 0.2s;
 }
-
 select:focus { border-color: rgba(79,142,247,0.4); }
 
-/* BUTTONS */
 .btn-row {
   display: flex;
   gap: 8px;
   margin-top: 16px;
 }
-
 .btn-start {
   flex: 1;
   background: linear-gradient(135deg, #22c55e, #16a34a);
@@ -377,15 +345,9 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   transition: opacity 0.15s, transform 0.1s;
   letter-spacing: -0.2px;
 }
-
 .btn-start:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
 .btn-start:active:not(:disabled) { transform: translateY(0); }
-.btn-start:disabled {
-  background: var(--bg2);
-  color: var(--muted);
-  cursor: not-allowed;
-  border: 1px solid var(--border);
-}
+.btn-start:disabled { background: var(--bg2); color: var(--muted); cursor: not-allowed; border: 1px solid var(--border); }
 
 .btn-stop {
   background: var(--bg2);
@@ -402,7 +364,6 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   gap: 6px;
   transition: background 0.15s;
 }
-
 .btn-stop:hover:not(:disabled) { background: var(--bg3); }
 .btn-stop:disabled { color: var(--muted); cursor: not-allowed; }
 
@@ -415,10 +376,8 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   cursor: pointer;
   transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
-
 .btn-clr:hover { color: var(--red); border-color: rgba(248,113,113,0.4); background: rgba(248,113,113,0.06); }
 
-/* PROGRESS */
 .progress-wrap {
   margin-top: 14px;
   height: 4px;
@@ -426,31 +385,260 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   border-radius: 4px;
   overflow: hidden;
 }
-
 .progress-bar {
   height: 100%;
   background: linear-gradient(90deg, #22c55e, #4f8ef7);
   border-radius: 4px;
   width: 0%;
   transition: width 0.3s ease;
-  position: relative;
 }
 
-.progress-bar::after {
-  content: '';
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 40px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+/* ====== PISAHKAN AKUN PANEL ====== */
+.sep-panel {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
 }
-
-/* RESULTS */
-.results-col {
+.sep-header {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(251,146,60,0.08), rgba(251,146,60,0.02));
+  border-bottom: 1px solid var(--orange-border);
+}
+.sep-header-icon {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: var(--orange-bg);
+  border: 1px solid var(--orange-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.sep-header-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+.sep-header-sub {
+  font-size: 10px;
+  color: var(--orange);
+  font-family: var(--mono);
+  background: var(--orange-bg);
+  border: 1px solid var(--orange-border);
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 600;
 }
 
+.sep-body { padding: 20px; }
+
+.sep-desc {
+  font-size: 11px;
+  color: var(--muted2);
+  line-height: 1.6;
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  background: var(--bg2);
+  border-radius: 8px;
+  border-left: 3px solid var(--orange);
+}
+
+.sep-filter-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.sep-filter-grid .opt-block label { color: var(--muted2); }
+
+.age-input-wrap {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.age-num-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+  padding: 10px 14px;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.age-num-input:focus { border-color: var(--orange); }
+.age-unit-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--orange);
+  background: var(--orange-bg);
+  border: 1px solid var(--orange-border);
+  padding: 5px 12px;
+  border-radius: 7px;
+  font-family: var(--mono);
+  white-space: nowrap;
+}
+
+.age-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.preset-btn {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--muted2);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+.preset-btn:hover, .preset-btn.active { color: var(--orange); border-color: var(--orange-border); background: var(--orange-bg); }
+
+.sep-mode-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.mode-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mode-card.selected { border-color: var(--orange-border); background: var(--orange-bg); }
+.mode-card-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.mode-radio {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--muted);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.mode-card.selected .mode-radio {
+  border-color: var(--orange);
+  background: var(--orange);
+  box-shadow: 0 0 0 3px var(--orange-bg);
+}
+.mode-label { font-size: 12px; font-weight: 600; color: var(--text); }
+.mode-sub { font-size: 10px; color: var(--muted); line-height: 1.4; }
+
+/* RESULTS INSIDE SEPARATOR */
+.sep-result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.sep-result-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.srb-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.srb-dot { width: 8px; height: 8px; border-radius: 50%; }
+.srb-dot.young { background: var(--cyan); }
+.srb-dot.old { background: var(--orange); }
+.srb-title { font-size: 11px; font-weight: 600; color: var(--text); flex: 1; }
+.srb-cnt {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.srb-cnt.young { background: var(--cyan-bg); border: 1px solid var(--cyan-border); color: var(--cyan); }
+.srb-cnt.old { background: var(--orange-bg); border: 1px solid var(--orange-border); color: var(--orange); }
+.srb-list { max-height: 180px; overflow-y: auto; }
+.srb-list::-webkit-scrollbar { width: 3px; }
+.srb-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+.srb-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  animation: fadeIn 0.2s ease;
+}
+.srb-item:last-child { border-bottom: none; }
+.srb-uname { font-family: var(--mono); font-weight: 600; color: var(--text); }
+.srb-age { font-family: var(--mono); font-size: 10px; color: var(--muted2); }
+.srb-empty { padding: 18px; text-align: center; font-size: 11px; color: var(--muted); font-family: var(--mono); }
+
+.sep-btn-row {
+  display: flex;
+  gap: 8px;
+}
+.btn-sep-run {
+  flex: 1;
+  background: linear-gradient(135deg, #fb923c, #ea580c);
+  border: none;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: opacity 0.15s, transform 0.1s;
+  letter-spacing: -0.2px;
+}
+.btn-sep-run:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-sep-run:active { transform: translateY(0); }
+.btn-sep-run:disabled { background: var(--bg2); color: var(--muted); cursor: not-allowed; border: 1px solid var(--border); }
+.btn-sep-dl {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  color: var(--muted2);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s;
+}
+.btn-sep-dl:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+.btn-sep-dl:disabled { color: var(--muted); cursor: not-allowed; }
+
+/* RESULT GROUPS */
+.results-col { display: flex; flex-direction: column; gap: 12px; }
 .result-group {
   background: var(--bg1);
   border: 1px solid var(--border);
@@ -458,9 +646,7 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   overflow: hidden;
   transition: border-color 0.2s;
 }
-
 .result-group:hover { border-color: var(--border2); }
-
 .rg-header {
   display: flex;
   align-items: center;
@@ -469,35 +655,18 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
 }
-
 .rg-icon {
-  width: 24px;
-  height: 24px;
+  width: 24px; height: 24px;
   border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
   flex-shrink: 0;
 }
-
 .rg-icon.pro { background: var(--purple-bg); border: 1px solid var(--purple-border); color: var(--purple); }
 .rg-icon.live { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
 .rg-icon.nf { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
-
-.rg-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
-  flex: 1;
-}
-
-.rg-actions {
-  display: flex;
-  gap: 4px;
-}
-
+.rg-title { font-size: 12px; font-weight: 600; color: var(--text); flex: 1; }
+.rg-actions { display: flex; gap: 4px; }
 .act-btn {
   background: var(--bg3);
   border: 1px solid var(--border);
@@ -511,9 +680,7 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   transition: color 0.15s, border-color 0.15s;
   letter-spacing: 0.5px;
 }
-
 .act-btn:hover { color: var(--text); border-color: var(--border2); }
-
 .rg-count {
   font-family: var(--mono);
   font-size: 11px;
@@ -523,21 +690,13 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   min-width: 34px;
   text-align: center;
 }
-
 .rg-count.pro { background: var(--purple-bg); border: 1px solid var(--purple-border); color: var(--purple); }
 .rg-count.live { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
 .rg-count.nf { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
-
-/* RESULT ITEMS */
-.result-list {
-  max-height: 260px;
-  overflow-y: auto;
-}
-
+.result-list { max-height: 260px; overflow-y: auto; }
 .result-list::-webkit-scrollbar { width: 4px; }
 .result-list::-webkit-scrollbar-track { background: transparent; }
 .result-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-
 .result-item {
   display: flex;
   align-items: center;
@@ -547,144 +706,72 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   transition: background 0.1s;
   animation: fadeIn 0.25s ease;
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 .result-item:last-child { border-bottom: none; }
 .result-item:hover { background: rgba(255,255,255,0.02); }
-
-.avatar-wrap {
-  position: relative;
-  flex-shrink: 0;
-}
-
+.avatar-wrap { position: relative; flex-shrink: 0; }
 .avatar {
-  width: 38px;
-  height: 38px;
+  width: 38px; height: 38px;
   border-radius: 50%;
   background: var(--bg3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   border: 2px solid var(--border);
 }
-
 .avatar.pro-av { border-color: rgba(167,139,250,0.4); }
 .avatar.live-av { border-color: rgba(34,197,94,0.3); }
 .avatar.nf-av { border-color: rgba(248,113,113,0.3); }
-
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
+.avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .online-dot {
   position: absolute;
-  bottom: 1px;
-  right: 1px;
-  width: 10px;
-  height: 10px;
+  bottom: 1px; right: 1px;
+  width: 10px; height: 10px;
   border-radius: 50%;
   background: var(--green);
   border: 2px solid var(--bg1);
   box-shadow: 0 0 6px rgba(34,197,94,0.5);
 }
-
 .user-info { flex: 1; min-width: 0; }
-
-.uname-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.uname {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-}
-
+.uname-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.uname { font-size: 13px; font-weight: 600; color: var(--text); }
 .pro-tag {
-  background: var(--purple-bg);
-  border: 1px solid var(--purple-border);
-  color: var(--purple);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  padding: 2px 7px;
-  border-radius: 4px;
-  text-transform: uppercase;
+  background: var(--purple-bg); border: 1px solid var(--purple-border);
+  color: var(--purple); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.8px; padding: 2px 7px; border-radius: 4px; text-transform: uppercase;
 }
-
 .age-tag {
-  background: rgba(79,142,247,0.08);
-  border: 1px solid rgba(79,142,247,0.2);
-  color: #7bb3fa;
-  font-size: 9px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 4px;
-  font-family: var(--mono);
+  background: rgba(79,142,247,0.08); border: 1px solid rgba(79,142,247,0.2);
+  color: #7bb3fa; font-size: 9px; font-weight: 600;
+  padding: 2px 7px; border-radius: 4px; font-family: var(--mono);
 }
-
 .umeta {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--muted2);
-  margin-top: 3px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  font-family: var(--mono); font-size: 10px; color: var(--muted2);
+  margin-top: 3px; display: flex; gap: 10px; flex-wrap: wrap;
 }
-
 .err-pill {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--red);
-  background: var(--red-bg);
-  border: 1px solid var(--red-border);
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-weight: 700;
-  flex-shrink: 0;
+  font-family: var(--mono); font-size: 11px; color: var(--red);
+  background: var(--red-bg); border: 1px solid var(--red-border);
+  padding: 3px 8px; border-radius: 5px; font-weight: 700; flex-shrink: 0;
 }
-
 .empty-state {
   padding: 28px 16px;
   text-align: center;
   color: var(--muted);
   font-size: 12px;
   font-family: var(--mono);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
 }
-
 .empty-icon {
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   border-radius: 8px;
   background: var(--bg2);
   border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   color: var(--muted);
 }
-
-/* NOTIFICATION TOAST */
 .toast {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 24px; right: 24px;
   background: var(--bg2);
   border: 1px solid var(--border2);
   color: var(--text);
@@ -692,23 +779,24 @@ select:focus { border-color: rgba(79,142,247,0.4); }
   font-family: var(--mono);
   padding: 10px 16px;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex; align-items: center; gap: 8px;
   transform: translateY(80px);
   opacity: 0;
   transition: all 0.3s ease;
   z-index: 100;
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
-
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+/* Page views */
+.page { display: none; }
+.page.active { display: block; }
 </style>
 </head>
 <body>
-
 <div class="container">
+
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-logo">
@@ -724,173 +812,363 @@ select:focus { border-color: rgba(79,142,247,0.4); }
     </div>
   </nav>
 
-  <!-- STATS -->
-  <div class="stats-bar">
-    <div class="stat-card pro-card">
-      <div class="stat-label">★ Pro</div>
-      <div class="stat-val sv-pro" id="s-pro">0</div>
-    </div>
-    <div class="stat-card live-card">
-      <div class="stat-label">✓ Live</div>
-      <div class="stat-val sv-live" id="s-live">0</div>
-    </div>
-    <div class="stat-card nf-card">
-      <div class="stat-label">✕ Not Found</div>
-      <div class="stat-val sv-nf" id="s-nf">0</div>
-    </div>
-    <div class="stat-card spd-card">
-      <div class="stat-label">⚡ Speed</div>
-      <div class="stat-val sv-spd" id="s-spd">—</div>
-    </div>
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('checker')">
+      <div class="tab-dot blue"></div>
+      GHS Checker
+    </button>
+    <button class="tab" onclick="switchTab('separator')">
+      <div class="tab-dot orange"></div>
+      Pisahkan Akun
+    </button>
   </div>
 
-  <!-- MAIN -->
-  <div class="main-grid">
+  <!-- ===== TAB: CHECKER ===== -->
+  <div class="page active" id="page-checker">
 
-    <!-- LEFT: INPUT PANEL -->
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-icon">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3A1.5 1.5 0 0 1 15 10.5v3A1.5 1.5 0 0 1 13.5 15h-3A1.5 1.5 0 0 1 9 13.5z"/></svg>
-        </div>
-        <span class="panel-title">Username List</span>
-        <span class="panel-hint">1 per baris</span>
+    <div class="stats-bar">
+      <div class="stat-card pro-card">
+        <div class="stat-label">★ Pro</div>
+        <div class="stat-val sv-pro" id="s-pro">0</div>
       </div>
-
-      <textarea id="inp" placeholder="torvalds&#10;gvanrossum&#10;addyosmani&#10;sindresorhus&#10;..."></textarea>
-
-      <div class="field-label">
-        <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a2 2 0 0 1 2 2v.5h1A1.5 1.5 0 0 1 12.5 5v8a1.5 1.5 0 0 1-1.5 1.5h-6A1.5 1.5 0 0 1 3.5 13V5A1.5 1.5 0 0 1 5 3.5h1V3a2 2 0 0 1 2-2z"/></svg>
-        GitHub Token (Opsional)
+      <div class="stat-card live-card">
+        <div class="stat-label">✓ Live</div>
+        <div class="stat-val sv-live" id="s-live">0</div>
       </div>
-      <input class="token-input" id="tok" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
-
-      <div class="opts-row">
-        <div class="opt-block">
-          <label>Concurrent</label>
-          <select id="conc">
-            <option value="3">3× Safe</option>
-            <option value="6" selected>6× Fast</option>
-            <option value="10">10× Ultra</option>
-            <option value="20">20× (Token)</option>
-          </select>
-        </div>
-        <div class="opt-block">
-          <label>Pro Check</label>
-          <select id="prochk">
-            <option value="1" selected>On (Akurat)</option>
-            <option value="0">Off (Cepat)</option>
-          </select>
-        </div>
+      <div class="stat-card nf-card">
+        <div class="stat-label">✕ Not Found</div>
+        <div class="stat-val sv-nf" id="s-nf">0</div>
       </div>
-
-      <div class="btn-row">
-        <button class="btn-start" id="btn-start" onclick="startCheck()">
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>
-          Start Check
-        </button>
-        <button class="btn-stop" id="btn-stop" onclick="stopCheck()" disabled>
-          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6A1.5 1.5 0 0 1 11 12.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z"/></svg>
-          Stop
-        </button>
-        <button class="btn-clr" onclick="clearAll()" title="Clear all">
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
-        </button>
-      </div>
-
-      <div class="progress-wrap">
-        <div class="progress-bar" id="pb"></div>
+      <div class="stat-card spd-card">
+        <div class="stat-label">⚡ Speed</div>
+        <div class="stat-val sv-spd" id="s-spd">—</div>
       </div>
     </div>
 
-    <!-- RIGHT: RESULTS -->
-    <div class="results-col">
-
-      <!-- PRO -->
-      <div class="result-group">
-        <div class="rg-header">
-          <div class="rg-icon pro">★</div>
-          <span class="rg-title">Pro Account</span>
-          <div class="rg-actions">
-            <button class="act-btn" onclick="copyG('pro')">COPY</button>
-            <button class="act-btn" onclick="dlG('pro')">DL</button>
+    <div class="main-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3A1.5 1.5 0 0 1 15 10.5v3A1.5 1.5 0 0 1 13.5 15h-3A1.5 1.5 0 0 1 9 13.5z"/></svg>
           </div>
-          <span class="rg-count pro" id="c-pro">0</span>
+          <span class="panel-title">Username List</span>
+          <span class="panel-hint">1 per baris</span>
         </div>
-        <div class="result-list" id="l-pro">
-          <div class="empty-state">
-            <div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg></div>
-            Belum ada pro account
+
+        <textarea id="inp" placeholder="torvalds&#10;gvanrossum&#10;addyosmani&#10;sindresorhus&#10;..."></textarea>
+
+        <div class="field-label">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a2 2 0 0 1 2 2v.5h1A1.5 1.5 0 0 1 12.5 5v8a1.5 1.5 0 0 1-1.5 1.5h-6A1.5 1.5 0 0 1 3.5 13V5A1.5 1.5 0 0 1 5 3.5h1V3a2 2 0 0 1 2-2z"/></svg>
+          GitHub Token (Opsional)
+        </div>
+        <input class="token-input" id="tok" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"/>
+
+        <div class="opts-row">
+          <div class="opt-block">
+            <label>Concurrent</label>
+            <select id="conc">
+              <option value="3">3× Safe</option>
+              <option value="6" selected>6× Fast</option>
+              <option value="10">10× Ultra</option>
+              <option value="20">20× (Token)</option>
+            </select>
           </div>
+          <div class="opt-block">
+            <label>Pro Check</label>
+            <select id="prochk">
+              <option value="1" selected>On (Akurat)</option>
+              <option value="0">Off (Cepat)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-start" id="btn-start" onclick="startCheck()">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>
+            Start Check
+          </button>
+          <button class="btn-stop" id="btn-stop" onclick="stopCheck()" disabled>
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6A1.5 1.5 0 0 1 11 12.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z"/></svg>
+            Stop
+          </button>
+          <button class="btn-clr" onclick="clearAll()" title="Clear all">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+          </button>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="pb"></div>
         </div>
       </div>
 
-      <!-- LIVE -->
-      <div class="result-group">
-        <div class="rg-header">
-          <div class="rg-icon live">✓</div>
-          <span class="rg-title">Live</span>
-          <div class="rg-actions">
-            <button class="act-btn" onclick="copyG('live')">COPY</button>
-            <button class="act-btn" onclick="dlG('live')">DL</button>
+      <div class="results-col">
+        <div class="result-group">
+          <div class="rg-header">
+            <div class="rg-icon pro">★</div>
+            <span class="rg-title">Pro Account</span>
+            <div class="rg-actions">
+              <button class="act-btn" onclick="copyG('pro')">COPY</button>
+              <button class="act-btn" onclick="dlG('pro')">DL</button>
+            </div>
+            <span class="rg-count pro" id="c-pro">0</span>
           </div>
-          <span class="rg-count live" id="c-live">0</span>
+          <div class="result-list" id="l-pro">
+            <div class="empty-state"><div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg></div>Belum ada pro account</div>
+          </div>
         </div>
-        <div class="result-list" id="l-live">
-          <div class="empty-state">
-            <div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg></div>
-            Belum ada live account
+
+        <div class="result-group">
+          <div class="rg-header">
+            <div class="rg-icon live">✓</div>
+            <span class="rg-title">Live</span>
+            <div class="rg-actions">
+              <button class="act-btn" onclick="copyG('live')">COPY</button>
+              <button class="act-btn" onclick="dlG('live')">DL</button>
+            </div>
+            <span class="rg-count live" id="c-live">0</span>
+          </div>
+          <div class="result-list" id="l-live">
+            <div class="empty-state"><div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg></div>Belum ada live account</div>
+          </div>
+        </div>
+
+        <div class="result-group">
+          <div class="rg-header">
+            <div class="rg-icon nf">✕</div>
+            <span class="rg-title">Not Found</span>
+            <div class="rg-actions">
+              <button class="act-btn" onclick="copyG('notfound')">COPY</button>
+              <button class="act-btn" onclick="dlG('notfound')">DL</button>
+            </div>
+            <span class="rg-count nf" id="c-nf">0</span>
+          </div>
+          <div class="result-list" id="l-nf">
+            <div class="empty-state"><div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg></div>Belum ada not found</div>
           </div>
         </div>
       </div>
-
-      <!-- NOT FOUND -->
-      <div class="result-group">
-        <div class="rg-header">
-          <div class="rg-icon nf">✕</div>
-          <span class="rg-title">Not Found</span>
-          <div class="rg-actions">
-            <button class="act-btn" onclick="copyG('notfound')">COPY</button>
-            <button class="act-btn" onclick="dlG('notfound')">DL</button>
-          </div>
-          <span class="rg-count nf" id="c-nf">0</span>
-        </div>
-        <div class="result-list" id="l-nf">
-          <div class="empty-state">
-            <div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg></div>
-            Belum ada not found
-          </div>
-        </div>
-      </div>
-
     </div>
-  </div>
-</div>
+  </div><!-- end page checker -->
 
-<!-- TOAST -->
+  <!-- ===== TAB: PISAHKAN AKUN ===== -->
+  <div class="page" id="page-separator">
+    <div class="main-grid">
+      <!-- LEFT: FILTER CONFIG -->
+      <div class="sep-panel">
+        <div class="sep-header">
+          <div class="sep-header-icon">✂</div>
+          <div class="sep-header-title">Pisahkan Akun</div>
+          <div class="sep-header-sub">AGE FILTER</div>
+        </div>
+        <div class="sep-body">
+
+          <div class="sep-desc">
+            Pisahkan akun hasil checker berdasarkan usia pembuatan akun. Masukkan batas usia, pilih mode, lalu klik Pisahkan.
+          </div>
+
+          <!-- INPUT MANUAL USIA -->
+          <div class="field-label" style="margin-top:0">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5z"/></svg>
+            Batas Usia Akun
+          </div>
+
+          <div class="age-input-wrap">
+            <input class="age-num-input" id="age-val" type="number" min="1" value="30" oninput="syncPreset()"/>
+            <div class="age-unit-badge" id="age-unit-badge">HARI</div>
+          </div>
+
+          <!-- UNIT -->
+          <div class="opts-row" style="margin-top:0; margin-bottom:14px">
+            <div class="opt-block">
+              <label>Satuan Waktu</label>
+              <select id="age-unit" onchange="updateUnitBadge(); syncPreset()">
+                <option value="days" selected>Hari</option>
+                <option value="months">Bulan</option>
+                <option value="years">Tahun</option>
+              </select>
+            </div>
+            <div class="opt-block">
+              <label>Sumber Data</label>
+              <select id="sep-source">
+                <option value="all">Semua (Pro+Live)</option>
+                <option value="pro">Pro saja</option>
+                <option value="live">Live saja</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PRESETS -->
+          <div class="field-label">⚡ Preset Cepat</div>
+          <div class="age-presets" id="presets-wrap">
+            <button class="preset-btn" onclick="applyPreset(3,'days')">3 Hari</button>
+            <button class="preset-btn" onclick="applyPreset(7,'days')">7 Hari</button>
+            <button class="preset-btn" onclick="applyPreset(14,'days')">14 Hari</button>
+            <button class="preset-btn" onclick="applyPreset(30,'days')">30 Hari</button>
+            <button class="preset-btn" onclick="applyPreset(60,'days')">60 Hari</button>
+            <button class="preset-btn" onclick="applyPreset(90,'days')">90 Hari</button>
+            <button class="preset-btn" onclick="applyPreset(6,'months')">6 Bulan</button>
+            <button class="preset-btn" onclick="applyPreset(1,'years')">1 Tahun</button>
+            <button class="preset-btn" onclick="applyPreset(2,'years')">2 Tahun</button>
+            <button class="preset-btn" onclick="applyPreset(5,'years')">5 Tahun</button>
+          </div>
+
+          <!-- MODE -->
+          <div class="field-label">Mode Pemisahan</div>
+          <div class="sep-mode-row">
+            <div class="mode-card selected" id="mode-below" onclick="selectMode('below')">
+              <div class="mode-card-top">
+                <div class="mode-radio"></div>
+                <div class="mode-label">Di bawah batas</div>
+              </div>
+              <div class="mode-sub">Akun lebih muda dari X hari/bulan/tahun masuk grup <span style="color:var(--cyan)">Muda</span></div>
+            </div>
+            <div class="mode-card" id="mode-above" onclick="selectMode('above')">
+              <div class="mode-card-top">
+                <div class="mode-radio"></div>
+                <div class="mode-label">Di atas batas</div>
+              </div>
+              <div class="mode-sub">Akun lebih tua dari X hari/bulan/tahun masuk grup <span style="color:var(--orange)">Tua</span></div>
+            </div>
+          </div>
+
+          <div class="sep-btn-row">
+            <button class="btn-sep-run" onclick="runSeparator()">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>
+              Pisahkan Sekarang
+            </button>
+            <button class="btn-sep-dl" onclick="dlSepGroup('young')" title="Download Muda">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/></svg>
+              Muda
+            </button>
+            <button class="btn-sep-dl" onclick="dlSepGroup('old')" title="Download Tua">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/></svg>
+              Tua
+            </button>
+          </div>
+
+          <!-- SEPARATOR STATS -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px">
+            <div style="background:var(--cyan-bg);border:1px solid var(--cyan-border);border-radius:8px;padding:10px 12px;text-align:center">
+              <div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:4px">Akun Muda</div>
+              <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--cyan)" id="sep-young-cnt">0</div>
+            </div>
+            <div style="background:var(--orange-bg);border:1px solid var(--orange-border);border-radius:8px;padding:10px 12px;text-align:center">
+              <div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:4px">Akun Tua</div>
+              <div style="font-family:var(--mono);font-size:22px;font-weight:700;color:var(--orange)" id="sep-old-cnt">0</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT: RESULTS -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+
+        <!-- YOUNG GROUP -->
+        <div class="result-group">
+          <div class="rg-header">
+            <div class="rg-icon" style="background:var(--cyan-bg);border:1px solid var(--cyan-border);color:var(--cyan)">↑</div>
+            <span class="rg-title">Akun Muda</span>
+            <div class="rg-actions">
+              <button class="act-btn" onclick="copySep('young')">COPY</button>
+              <button class="act-btn" onclick="dlSepGroup('young')">DL</button>
+            </div>
+            <span class="rg-count" style="background:var(--cyan-bg);border:1px solid var(--cyan-border);color:var(--cyan)" id="cnt-young">0</span>
+          </div>
+          <div class="result-list" id="list-young">
+            <div class="srb-empty">Belum ada hasil — klik Pisahkan Sekarang</div>
+          </div>
+        </div>
+
+        <!-- OLD GROUP -->
+        <div class="result-group">
+          <div class="rg-header">
+            <div class="rg-icon" style="background:var(--orange-bg);border:1px solid var(--orange-border);color:var(--orange)">↓</div>
+            <span class="rg-title">Akun Tua</span>
+            <div class="rg-actions">
+              <button class="act-btn" onclick="copySep('old')">COPY</button>
+              <button class="act-btn" onclick="dlSepGroup('old')">DL</button>
+            </div>
+            <span class="rg-count" style="background:var(--orange-bg);border:1px solid var(--orange-border);color:var(--orange)" id="cnt-old">0</span>
+          </div>
+          <div class="result-list" id="list-old">
+            <div class="srb-empty">Belum ada hasil — klik Pisahkan Sekarang</div>
+          </div>
+        </div>
+
+        <!-- NO DATE GROUP -->
+        <div class="result-group">
+          <div class="rg-header">
+            <div class="rg-icon nf">?</div>
+            <span class="rg-title">Tidak Diketahui</span>
+            <div class="rg-actions">
+              <button class="act-btn" onclick="copySep('nodate')">COPY</button>
+              <button class="act-btn" onclick="dlSepGroup('nodate')">DL</button>
+            </div>
+            <span class="rg-count nf" id="cnt-nodate">0</span>
+          </div>
+          <div class="result-list" id="list-nodate">
+            <div class="srb-empty">Akun tanpa data tanggal muncul di sini</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- end page separator -->
+
+</div><!-- end container -->
+
 <div class="toast" id="toast">
   <div class="toast-dot"></div>
   <span id="toast-msg">Copied!</span>
 </div>
 
 <script>
-let stopFlag=false,running=false,checked=0,total=0,startTime=0;
-let res={pro:[],live:[],notfound:[]};
+/* ============================
+   STATE
+   ============================ */
+let stopFlag=false, running=false, checked=0, total=0, startTime=0;
+let res = { pro:[], live:[], notfound:[] };
+let sepGroups = { young:[], old:[], nodate:[] };
+let sepMode = 'below';
 
-function setDot(state){
-  const d=document.getElementById('status-dot');
-  d.className='status-dot '+state;
+/* ============================
+   TABS
+   ============================ */
+function switchTab(tab) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  if(tab==='checker') tabs[0].classList.add('active');
+  else tabs[1].classList.add('active');
 }
+
+/* ============================
+   UTILS
+   ============================ */
+function setDot(s){document.getElementById('status-dot').className='status-dot '+s}
 function setStatus(t){document.getElementById('status-text').textContent=t}
 function showToast(msg){
   const t=document.getElementById('toast');
   document.getElementById('toast-msg').textContent=msg;
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+  setTimeout(()=>t.classList.remove('show'),2600);
 }
 function fmt(s){if(!s)return'—';return new Date(s).toISOString().split('T')[0]}
 function daysAgo(s){if(!s)return null;return Math.floor((Date.now()-new Date(s))/86400000)}
-function ageLabel(d){if(d===null)return'';if(d>=365)return(d/365).toFixed(1)+'y';if(d>=30)return Math.floor(d/30)+'mo';return d+'d'}
+function ageLabel(d){
+  if(d===null||d===undefined)return'';
+  if(d>=365)return(d/365).toFixed(1)+'y';
+  if(d>=30)return Math.floor(d/30)+'mo';
+  return d+'d';
+}
+function ageLabelLong(d){
+  if(d===null||d===undefined)return'Tanggal N/A';
+  if(d>=365){const y=(d/365).toFixed(1);return y+' tahun lalu'}
+  if(d>=30){const m=Math.floor(d/30);return m+' bulan lalu'}
+  return d+' hari lalu';
+}
 function updCnt(g){
   const n=res[g].length;
   if(g==='pro'){document.getElementById('c-pro').textContent=n;document.getElementById('s-pro').textContent=n}
@@ -899,23 +1177,23 @@ function updCnt(g){
 }
 function updSpeed(){
   const el=(Date.now()-startTime)/1000;
-  document.getElementById('s-spd').textContent=(checked/el).toFixed(1)+'/s';
+  if(el>0)document.getElementById('s-spd').textContent=(checked/el).toFixed(1)+'/s';
 }
 
+/* ============================
+   CHECKER RENDER
+   ============================ */
 function renderItem(group,data){
   const listId={pro:'l-pro',live:'l-live',notfound:'l-nf'}[group];
   const list=document.getElementById(listId);
   const emp=list.querySelector('.empty-state');if(emp)emp.remove();
   const item=document.createElement('div');item.className='result-item';
-
   if(group==='notfound'){
     item.innerHTML=`
-      <div class="avatar-wrap">
-        <div class="avatar nf-av" style="font-size:15px;color:var(--red)">?</div>
-      </div>
+      <div class="avatar-wrap"><div class="avatar nf-av" style="font-size:15px;color:var(--red)">?</div></div>
       <div class="user-info">
         <div class="uname-row"><span class="uname">${data.login}</span></div>
-        <div class="umeta"><span>Account not found on GitHub</span></div>
+        <div class="umeta"><span>Account not found</span></div>
       </div>
       <span class="err-pill">404</span>`;
   } else {
@@ -937,7 +1215,7 @@ function renderItem(group,data){
         <div class="umeta">
           <span>ID: ${data.id}</span>
           <span>${fmt(data.created_at)}</span>
-          ${data.followers?`<span>${data.followers} followers</span>`:''}
+          ${data.followers?`<span>${data.followers} flw</span>`:''}
           ${data.public_repos?`<span>${data.public_repos} repos</span>`:''}
         </div>
       </div>`;
@@ -946,6 +1224,9 @@ function renderItem(group,data){
   list.scrollTop=list.scrollHeight;
 }
 
+/* ============================
+   CHECKER LOGIC
+   ============================ */
 async function checkPro(username){
   const proxies=[
     'https://api.allorigins.win/get?url='+encodeURIComponent('https://github.com/'+username),
@@ -957,10 +1238,9 @@ async function checkPro(username){
       if(!r.ok)continue;
       let html='';
       if(p.includes('allorigins')){const j=await r.json();html=j.contents||''}
-      else{html=await r.text()}
-      if(html.includes('Label--purple')&&html.includes('Pro'))return true;
-      return false;
-    }catch(e){continue}
+      else html=await r.text();
+      return html.includes('Label--purple')&&html.includes('Pro');
+    }catch{continue}
   }
   return false;
 }
@@ -975,8 +1255,8 @@ async function checkOne(username,token,doPro){
     if(!r.ok)return{status:'error',login:username,code:r.status};
     const data=await r.json();
     let isPro=false;
-    if(data.plan&&data.plan.name&&data.plan.name!=='free'){isPro=true}
-    else if(doPro){isPro=await checkPro(username)}
+    if(data.plan&&data.plan.name&&data.plan.name!=='free')isPro=true;
+    else if(doPro)isPro=await checkPro(username);
     return{status:isPro?'pro':'live',...data};
   }catch(e){return{status:'error',login:username}}
 }
@@ -993,7 +1273,7 @@ function handleResult(result){
     const list=document.getElementById('l-nf');
     const emp=list.querySelector('.empty-state');if(emp)emp.remove();
     const item=document.createElement('div');item.className='result-item';
-    item.innerHTML=`<div class="avatar-wrap"><div class="avatar" style="font-size:18px;color:var(--muted)">!</div></div><div class="user-info"><div class="uname-row"><span class="uname">${result.login}</span></div><div class="umeta">${result.msg||'Error fetching'}</div></div><span class="err-pill">${result.code||'ERR'}</span>`;
+    item.innerHTML=`<div class="avatar-wrap"><div class="avatar" style="font-size:18px;color:var(--muted)">!</div></div><div class="user-info"><div class="uname-row"><span class="uname">${result.login}</span></div><div class="umeta">${result.msg||'Error'}</div></div><span class="err-pill">${result.code||'ERR'}</span>`;
     list.appendChild(item);
   }
 }
@@ -1008,9 +1288,9 @@ async function startCheck(){
 
   res={pro:[],live:[],notfound:[]};
   ['l-pro','l-live','l-nf'].forEach(id=>{
-    document.getElementById(id).innerHTML='<div class="empty-state"><div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg></div>Memproses...</div>';
+    document.getElementById(id).innerHTML='<div class="empty-state"><div class="empty-icon">...</div>Memproses...</div>';
   });
-  ['c-pro','c-live','c-nf','s-pro','s-live','s-nf'].forEach(id=>{document.getElementById(id).textContent='0'});
+  ['c-pro','c-live','c-nf','s-pro','s-live','s-nf'].forEach(id=>document.getElementById(id).textContent='0');
   document.getElementById('pb').style.width='0%';
   document.getElementById('s-spd').textContent='—';
 
@@ -1025,11 +1305,9 @@ async function startCheck(){
   await new Promise(resolve=>{
     function pump(){
       while(active<conc&&queue.length>0&&!stopFlag){
-        const u=queue.shift();
-        active++;
+        const u=queue.shift();active++;
         checkOne(u,token,doPro).then(result=>{
-          handleResult(result);
-          active--;
+          handleResult(result);active--;
           if(!stopFlag&&queue.length>0)pump();
           if(active===0)resolve();
         });
@@ -1044,8 +1322,7 @@ async function startCheck(){
   document.getElementById('btn-stop').disabled=true;
   setDot('idle');
   const elapsed=((Date.now()-startTime)/1000).toFixed(1);
-  const msg=`${stopFlag?'Stopped':'Done'} — ${checked} checked in ${elapsed}s · Pro:${res.pro.length} Live:${res.live.length} NF:${res.notfound.length}`;
-  setStatus(msg);
+  setStatus(`${stopFlag?'Stopped':'Done'} — ${checked} checked in ${elapsed}s · Pro:${res.pro.length} Live:${res.live.length} NF:${res.notfound.length}`);
   if(!stopFlag)showToast(`✓ Selesai ${checked} akun dalam ${elapsed}s`);
 }
 
@@ -1059,9 +1336,9 @@ function clearAll(){
   document.getElementById('inp').value='';
   res={pro:[],live:[],notfound:[]};
   ['l-pro','l-live','l-nf'].forEach(id=>{
-    document.getElementById(id).innerHTML='<div class="empty-state"><div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg></div>Belum ada hasil</div>';
+    document.getElementById(id).innerHTML='<div class="empty-state"><div class="empty-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/></svg></div>Belum ada hasil</div>';
   });
-  ['c-pro','c-live','c-nf','s-pro','s-live','s-nf'].forEach(id=>{document.getElementById(id).textContent='0'});
+  ['c-pro','c-live','c-nf','s-pro','s-live','s-nf'].forEach(id=>document.getElementById(id).textContent='0');
   document.getElementById('pb').style.width='0%';
   document.getElementById('s-spd').textContent='—';
   setDot('idle');
@@ -1069,19 +1346,161 @@ function clearAll(){
 }
 
 function copyG(g){
-  const map={pro:'pro',live:'live',notfound:'notfound'};
-  const lines=res[map[g]].map(r=>r.login).join('\n');
-  if(!lines){showToast('Tidak ada data untuk di-copy');return}
-  navigator.clipboard.writeText(lines).then(()=>showToast(`Copied ${res[map[g]].length} username!`)).catch(()=>prompt('Copy:',lines));
+  const lines=res[g].map(r=>r.login).join('\n');
+  if(!lines){showToast('Tidak ada data');return}
+  navigator.clipboard.writeText(lines).then(()=>showToast(`Copied ${res[g].length} username!`)).catch(()=>prompt('Copy:',lines));
 }
 
 function dlG(g){
-  const map={pro:'pro',live:'live',notfound:'notfound'};
-  const lines=res[map[g]].map(r=>r.login).join('\n');
-  if(!lines){showToast('Tidak ada data untuk di-download');return}
+  const lines=res[g].map(r=>r.login).join('\n');
+  if(!lines){showToast('Tidak ada data');return}
   const a=document.createElement('a');
   a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(lines);
   a.download='ghs_'+g+'_accounts.txt';
+  a.click();
+}
+
+/* ============================
+   SEPARATOR LOGIC
+   ============================ */
+function selectMode(m){
+  sepMode=m;
+  document.getElementById('mode-below').classList.toggle('selected', m==='below');
+  document.getElementById('mode-above').classList.toggle('selected', m==='above');
+}
+
+function updateUnitBadge(){
+  const unit=document.getElementById('age-unit').value;
+  const map={days:'HARI',months:'BULAN',years:'TAHUN'};
+  document.getElementById('age-unit-badge').textContent=map[unit];
+}
+
+function applyPreset(val, unit){
+  document.getElementById('age-val').value=val;
+  document.getElementById('age-unit').value=unit;
+  updateUnitBadge();
+  // highlight active preset
+  document.querySelectorAll('.preset-btn').forEach(b=>{
+    const match=b.textContent.trim();
+    const unitLabel={days:'Hari',months:'Bulan',years:'Tahun'}[unit];
+    b.classList.toggle('active', match===val+' '+unitLabel);
+  });
+}
+
+function syncPreset(){
+  const val=parseInt(document.getElementById('age-val').value);
+  const unit=document.getElementById('age-unit').value;
+  document.querySelectorAll('.preset-btn').forEach(b=>{
+    const unitLabel={days:'Hari',months:'Bulan',years:'Tahun'}[unit];
+    b.classList.toggle('active', b.textContent.trim()===val+' '+unitLabel);
+  });
+}
+
+function toDays(val, unit){
+  if(unit==='days')return val;
+  if(unit==='months')return val*30;
+  if(unit==='years')return val*365;
+  return val;
+}
+
+function runSeparator(){
+  const val=parseInt(document.getElementById('age-val').value)||30;
+  const unit=document.getElementById('age-unit').value;
+  const source=document.getElementById('sep-source').value;
+  const limitDays=toDays(val, unit);
+
+  // gather source data
+  let pool=[];
+  if(source==='all')pool=[...res.pro,...res.live];
+  else if(source==='pro')pool=[...res.pro];
+  else pool=[...res.live];
+
+  if(pool.length===0){showToast('Tidak ada data checker — jalankan GHS Checker dulu');return}
+
+  sepGroups={young:[],old:[],nodate:[]};
+
+  pool.forEach(acc=>{
+    if(!acc.created_at){sepGroups.nodate.push(acc);return}
+    const d=daysAgo(acc.created_at);
+    if(d===null){sepGroups.nodate.push(acc);return}
+    if(sepMode==='below'){
+      // young = akun lebih muda dari batas (d < limitDays)
+      if(d<limitDays)sepGroups.young.push(acc);
+      else sepGroups.old.push(acc);
+    } else {
+      // above mode: young = di atas batas (d >= limitDays)
+      if(d>=limitDays)sepGroups.young.push(acc);
+      else sepGroups.old.push(acc);
+    }
+  });
+
+  renderSepResults();
+  const unitLabel={days:'hari',months:'bulan',years:'tahun'}[unit];
+  showToast(`✓ Dipilah: ${sepGroups.young.length} muda · ${sepGroups.old.length} tua`);
+  setStatus(`Pisah selesai: ${val} ${unitLabel} — Muda:${sepGroups.young.length} Tua:${sepGroups.old.length} N/A:${sepGroups.nodate.length}`);
+}
+
+function renderSepResults(){
+  renderSepList('young');
+  renderSepList('old');
+  renderSepList('nodate');
+  document.getElementById('sep-young-cnt').textContent=sepGroups.young.length;
+  document.getElementById('sep-old-cnt').textContent=sepGroups.old.length;
+  document.getElementById('cnt-young').textContent=sepGroups.young.length;
+  document.getElementById('cnt-old').textContent=sepGroups.old.length;
+  document.getElementById('cnt-nodate').textContent=sepGroups.nodate.length;
+}
+
+function renderSepList(gKey){
+  const listEl=document.getElementById('list-'+gKey);
+  const items=sepGroups[gKey];
+  if(items.length===0){
+    listEl.innerHTML='<div class="srb-empty">Tidak ada akun di grup ini</div>';
+    return;
+  }
+  listEl.innerHTML='';
+  items.forEach(acc=>{
+    const d=daysAgo(acc.created_at);
+    const item=document.createElement('div');
+    item.className='result-item';
+    item.style.animation='fadeIn 0.2s ease';
+    item.innerHTML=`
+      <div class="avatar-wrap">
+        <div class="avatar live-av" style="border-color:${gKey==='young'?'rgba(34,211,238,0.4)':gKey==='old'?'rgba(251,146,60,0.4)':'rgba(255,255,255,0.1)'}">
+          <img src="${acc.avatar_url||''}" onerror="this.parentNode.innerHTML='${(acc.login||'?')[0].toUpperCase()}'" loading="lazy"/>
+        </div>
+      </div>
+      <div class="user-info">
+        <div class="uname-row">
+          <span class="uname">${acc.login}</span>
+          ${acc.plan&&acc.plan.name&&acc.plan.name!=='free'?'<span class="pro-tag">PRO</span>':''}
+          <span class="age-tag" style="background:${gKey==='young'?'rgba(34,211,238,0.08)':'rgba(251,146,60,0.08)'};border-color:${gKey==='young'?'rgba(34,211,238,0.2)':'rgba(251,146,60,0.2)'};color:${gKey==='young'?'var(--cyan)':'var(--orange)'}">${d!==null?ageLabel(d):'N/A'}</span>
+        </div>
+        <div class="umeta">
+          <span>Dibuat: ${fmt(acc.created_at)}</span>
+          ${acc.followers?`<span>${acc.followers} flw</span>`:''}
+          ${acc.public_repos?`<span>${acc.public_repos} repos</span>`:''}
+        </div>
+      </div>`;
+    listEl.appendChild(item);
+  });
+  listEl.scrollTop=0;
+}
+
+function copySep(gKey){
+  const lines=sepGroups[gKey].map(r=>r.login).join('\n');
+  if(!lines){showToast('Tidak ada data');return}
+  navigator.clipboard.writeText(lines).then(()=>showToast(`Copied ${sepGroups[gKey].length} username!`)).catch(()=>prompt('Copy:',lines));
+}
+
+function dlSepGroup(gKey){
+  const items=sepGroups[gKey];
+  if(!items||items.length===0){showToast('Tidak ada data di grup ini');return}
+  const lines=items.map(r=>r.login).join('\n');
+  const label={young:'muda',old:'tua',nodate:'unknown'}[gKey];
+  const a=document.createElement('a');
+  a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(lines);
+  a.download=`ghs_akun_${label}.txt`;
   a.click();
 }
 </script>
